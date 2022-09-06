@@ -2,10 +2,21 @@
 
 
 First iteration with sed
-```
+```sh
 cat log | grep sshd | grep "Accepted publickey for" | sed 's/.*Accepted publickey for //'
 ```
 
+Demo for "publickey for"
+```sh
+echo Mar 21 14:40:52 juliuspts-512mb-sgp1-1540046100423-s-1vcpu-1gb-sgp1-01 sshd[10486]: Accepted publickey for Accepted publickey for from 137.132.213.204 port 45476 ssh2: RSA SHA256:bu90QiNcKQbWqDbslyrd56AErYav9GuUVrjri1XlZKQ | grep sshd | grep "Accepted publickey for" | sed 's/.*Accepted publickey for //'
+```
+
+Notice how the username "Accepted publickey for" is now missing.
+
+Remedy it:
+```
+echo Mar 21 14:40:52 juliuspts-512mb-sgp1-1540046100423-s-1vcpu-1gb-sgp1-01 sshd[10486]: Accepted publickey for Accepted publickey for from 137.132.213.204 port 45476 ssh2: RSA SHA256:bu90QiNcKQbWqDbslyrd56AErYav9GuUVrjri1XlZKQ | grep sshd | grep "Accepted publickey for" | sed -E 's/.*Accepted publickey for (.*) from ([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}) port ([0-9]+) ssh2: RSA SHA256:.*/\1 \2:\3/'
+```
 
 Entire pipeline
 ```sh
