@@ -1,6 +1,5 @@
 # Commands for data wrangling workshop
 
-
 First iteration with sed
 ```sh
 cat log | grep sshd | grep "Accepted publickey for" | sed 's/.*Accepted publickey for //'
